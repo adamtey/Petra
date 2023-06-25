@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Petra's Birthday Celebration</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-image: url('ballooon.png');
+      font-family: Arial, sans-serif;
+      overflow: hidden;
+    }
+
+    .container {
+      position: relative;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 48px;
+      color: #333;
+      position: relative;
+      z-index: 2;
+      animation: scaleAnim 1.5s ease-in-out infinite alternate;
+      background-color: #ffcc00;
+      padding: 10px 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+    }
+
+    @keyframes scaleAnim {
+      0% {
+        transform: scale(1);
+      }
+
+      100% {
+        transform: scale(1.2);
+      }
+    }
+
+    .balloon {
+      position: absolute;
+      width: 100px;
+      height: 150px;
+      background-image: url('ballooon.png');
+      background-repeat: no-repeat;
+      animation: balloonAnim 4s infinite ease-in-out alternate;
+    }
+
+    .balloon::before {
+      content: '';
+      display: block;
+      width: 100%;
+      height: 100%;
+      background-image: url('ballooon.png');
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-position: center;
+      border-radius: 50%;
+    }
+
+    @keyframes balloonAnim {
+      0% {
+        transform: translateY(0) scale(1);
+      }
+
+      100% {
+        transform: translateY(-100vh) scale(1.2);
+      }
+    }
+
+    .shooting-star {
+      position: absolute;
+      top: 0;
+      left: -100px;
+      width: 100px;
+      height: 100px;
+      background-image: url('shooting-star.png');
+      background-repeat: no-repeat;
+      animation: shootingStarAnim 3s linear infinite;
+    }
+
+    @keyframes shootingStarAnim {
+      0% {
+        transform: translateX(0);
+      }
+
+      100% {
+        transform: translateX(100vw);
+      }
+    }
+
+    .options {
+      position: absolute;
+      bottom: 150px;
+      left: 0;
+      right: 0;
+      margin: auto;
+      display: flex;
+      justify-content: center;
+      z-index: 1;
+    }
+
+    .options button {
+      margin: 10px;
+      padding: 10px 20px;
+      font-size: 18px;
+      background-color: #ffcc00;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    .options button:hover {
+      background-color: #ffa500;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1 id="greeting" onclick="changeGreeting()">Welcome Petra</h1>
+    <button id="clickMeBtn" onclick="revealHappyBirthday()">Click Me</button>
+    <div id="options" class="options" style="display: none;">
+      <button onclick="playTennis()">Play Tennis</button>
+      <button onclick="makeWish()">Make a Wish on a Meal</button>
+    </div>
+  </div>
+
+  <script>
+    // Function to change the greeting
+    function changeGreeting() {
+      var greeting = document.getElementById("greeting");
+      greeting.textContent = "Happy Birthday Petra";
+      document.getElementById("clickMeBtn").style.display = "none";
+      document.getElementById("options").style.display = "flex";
+
+      createBalloons();
+      createShootingStars();
+    }
+
+    // Create balloons
+    function createBalloons() {
+      var container = document.querySelector(".container");
+      var balloonCount = 20;
+
+      for (var i = 0; i < balloonCount; i++) {
+        var balloon = document.createElement("div");
+        balloon.className = "balloon";
+        balloon.style.left = Math.random() * 100 + "vw";
+        balloon.style.animationDuration = Math.random() * 4 + 2 + "s";
+        balloon.style.animationDelay = Math.random() * 2 + "s";
+        container.appendChild(balloon);
+      }
+    }
+
+    // Create shooting stars
+    function createShootingStars() {
+      var container = document.querySelector(".container");
+      var starCount = 3;
+
+      for (var i = 0; i < starCount; i++) {
+        var star = document.createElement("div");
+        star.className = "shooting-star";
+        star.style.animationDelay = Math.random() * 4 + "s";
+        container.appendChild(star);
+      }
+    }
+
+    // Function for the "Play Tennis" option
+    function playTennis() {
+      window.location.href = "https://gdomiciano.github.io/tennis-game/";
+    }
+
+    // Function for the "Make a Wish on a Meal" option
+    function makeWish() {
+      alert("Make a wish on a meal!");
+    }
+
+    // Function to reveal the "Happy Birthday" section
+    function revealHappyBirthday() {
+      var greeting = document.getElementById("greeting");
+      greeting.textContent = "Happy Birthday Petra";
+      document.getElementById("clickMeBtn").style.display = "none";
+      document.getElementById("options").style.display = "flex";
+
+      createBalloons();
+      createShootingStars();
+    }
+  </script>
+</body>
+
+</html>

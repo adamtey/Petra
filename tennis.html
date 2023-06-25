@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Tennis Game</title>
+  <style>
+    /* CSS styles for the tennis game page */
+    body {
+      background-color: #f4f4f4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .tennis-court {
+      position: relative;
+      width: 600px;
+      height: 300px;
+      background-color: #90EE90;
+    }
+
+    .tennis-ball {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background-color: #FF0000;
+      animation: moveBall 2s infinite linear;
+    }
+
+    @keyframes moveBall {
+      0% {
+        transform: translate(-50%, -50%);
+      }
+
+      50% {
+        transform: translate(-50%, 0%);
+      }
+
+      100% {
+        transform: translate(-50%, -100%);
+      }
+    }
+
+    .tennis-racket {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 20px;
+      background-color: #000;
+    }
+
+    .game-over {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 24px;
+      color: #FF0000;
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Tennis Game</h1>
+  <div class="tennis-court">
+    <div class="tennis-ball"></div>
+    <div class="tennis-racket"></div>
+    <div class="game-over">Game Over</div>
+  </div>
+
+  <script>
+    // JavaScript code for the tennis game
+    window.addEventListener("DOMContentLoaded", () => {
+      const ball = document.querySelector(".tennis-ball");
+      const racket = document.querySelector(".tennis-racket");
+      const gameOverText = document.querySelector(".game-over");
+
+      let isGameOver = false;
+
+      document.addEventListener("keydown", moveRacket);
+
+      function moveRacket(event) {
+        if (isGameOver) return;
+
+        const key = event.keyCode;
+        const racketWidth = racket.offsetWidth;
+        const courtWidth = document.querySelector(".tennis-court").offsetWidth;
+
+        if (key === 37) {
+          // Left arrow key
+          const currentLeft = racket.style.left ? parseFloat(racket.style.left) : 0;
+          const newLeft = Math.max(currentLeft - 10, 0);
+          racket.style.left = newLeft + "px";
+        } else if (key === 39) {
+          // Right arrow key
+          const currentLeft = racket.style.left ? parseFloat(racket.style.left) : 0;
+          const newLeft = Math.min(currentLeft + 10, courtWidth - racketWidth);
+          racket.style.left = newLeft + "px";
+        }
+      }
+
+      ball.addEventListener("animationiteration", checkCollision);
+
+      function checkCollision() {
+        const ballRect = ball.getBoundingClientRect();
+        const racketRect = racket.getBoundingClientRect();
+
+        if (ballRect.bottom >= racketRect.top && ballRect.right >= racketRect.left && ballRect.left <= racketRect.right) {
+          // Ball hit by racket
+          increaseSpeed();
+        } else {
+          // Game over
+          endGame();
+        }
+      }
+
+      function increaseSpeed() {
+        ball.style.animationDuration = parseFloat(getComputedStyle(ball).animationDuration) * 0.8 + "s";
+      }
+
+      function endGame() {
+        isGameOver = true;
+        ball.style.animation = "none";
+        gameOverText.style.display = "block";
+      }
+    });
+  </script>
+</body>
+
+</html>
